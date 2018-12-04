@@ -32,6 +32,28 @@ class Controller_rapor extends CI_Controller {
 		$this->load->view('footer');
 	}
 
+	public function tampilRapor($id, $idKelas){
+		$data = $this->Model_nilai->lihatNilaiRapor($id, $idKelas);
+		$catatan = $data[0]->catatan;
+		$ratarata =0;
+		$pembagi = 0;
+		foreach ($data as $nilai) {
+			$ratarata += $nilai->nilai_akhir;
+			$pembagi++;
+		}
+		$ratarata = $ratarata/$pembagi;
+		var_dump($ratarata);
+		$param = array(
+			'data' 	=> $data,
+			'idKelas' => $idKelas,
+			'idSiswa' => $id,
+			'catatan' => $catatan,
+			'ratarata' => $ratarata,
+		);
+		$this->load->view('headerWali');
+		$this->load->view('WMRapor', $param);
+		$this->load->view('footer');
+	}
 
 	public function simpanCatatan(){
 		$id_kelas = $this->input->post('idKelas');
