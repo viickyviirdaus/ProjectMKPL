@@ -44,6 +44,7 @@ class Controller_siswa extends CI_Controller {
 		$this->load->view('ASiswaTidakAktif', $param);
 		$this->load->view('footer');
 	}
+	
 	public function nonaktifkanAkunSiswa($id){
 		$this->Model_siswa->nonaktifkanAkunSiswa($id);
 

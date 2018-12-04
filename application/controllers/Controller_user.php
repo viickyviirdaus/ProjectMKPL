@@ -8,7 +8,6 @@ class Controller_user extends CI_Controller {
 		parent::__construct();
 		$this->load->model('Model_user');
 		$this->load->model('Model_siswa');
-		$this->load->model('Model_nilai');
 		$this->load->library('session');
 	}
 
