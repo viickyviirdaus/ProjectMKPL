@@ -82,6 +82,7 @@ class Controller_user extends CI_Controller {
 				$this->load->view('loginWaliKelas', $param);
 			}
 	}
+}
 
 	public function logout(){
 		if ($this->session->userdata('status') == 'admin') {
