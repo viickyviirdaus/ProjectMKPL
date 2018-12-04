@@ -40,8 +40,49 @@ class Controller_user extends CI_Controller {
 				);
 				$this->load->view('loginAdmin', $param);
 			}
-		}
+		} elseif ($status == 'waliKelas') {
+			$nip = $this->input->post('nip');
+			$password = md5($this->input->post('psw'));
+			$where = array(
+				'nip' 		=> $nip,
+				'password' 	=> $password,
+				'status' 	=> "aktif"
+				);
+
+			$data = $this->Model_user->loginWaliKelas("wali_kelas",$where)->result();
+			$cek = $this->Model_user->loginWaliKelas("wali_kelas",$where)->num_rows();
+			if($cek == 1){
+				$data_session = array(
+					'nama'		=> $data[0]->nama,
+					'id_member' => $data[0]->id_wali_kelas,
+					'status' 	=> "waliKelas"
+				);
+				$this->session->set_userdata($data_session);
+
+
+				$idKelas = $data[0]->id_kelas;
+				$data = $this->Model_siswa->dataSiswa($idKelas);
+				$param = array(
+					'data' 	=> $data,
+					'idKelas' => $idKelas,
+					'data_login' =>$this->session->userdata(),
+				);
+				// var_dump($param);
+				$this->load->view('headerWali');
+				$this->load->view('WKDaftarSiswa', $param);
+				$this->load->view('footer');
+
+				// $this->session->set_userdata($data_session);
+				// $this->load->view('WKDaftarSiswa');
+			}else{
+				$param = array(
+					'login' => 'fail',
+				);
+				
+				$this->load->view('loginWaliKelas', $param);
+			}
 	}
+}
 
 	public function logout(){
 		if ($this->session->userdata('status') == 'admin') {
@@ -50,6 +91,12 @@ class Controller_user extends CI_Controller {
 				'login' 	=> 'nofail',
 			);
 			$this->load->view('loginAdmin', $param);
+		} elseif ($this->session->userdata('status') == 'waliKelas') {
+			$this->session->sess_destroy();
+			$param = array(
+				'login' => 'nofail',
+			);
+			$this->load->view('loginWaliKelas', $param);
 		} else {
 			var_dump($this->session->userdata('data_login'));
 			var_dump("Login sebagai siapa hayoo ???");
