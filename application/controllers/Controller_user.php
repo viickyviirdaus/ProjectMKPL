@@ -43,4 +43,33 @@ class Controller_user extends CI_Controller {
 			}
 		}
 	}
+
+	public function logout(){
+		if ($this->session->userdata('status') == 'admin') {
+			$this->session->sess_destroy();
+			$param = array(
+				'login' 	=> 'nofail',
+			);
+			$this->load->view('loginAdmin', $param);
+		} else {
+			var_dump($this->session->userdata('data_login'));
+			var_dump("Login sebagai siapa hayoo ???");
+		}
+	}
+
+	public function tambahAkunAdmin(){
+		$tabel = 'admin';
+		$data = array(
+			'nama'		=> $this->input->post('nama'),
+			'nip'		=> $this->input->post('nip'),
+			'password'	=> md5($this->input->post('psw')),
+		);
+		$this->Model_user->tambahAkunAdmin($data, $tabel);
+		$param = array(
+				'buatAkun' 	=> 'ya'
+			);
+		$this->load->view('headerAdmin');
+		$this->load->view('dashboardAdmin', $param);
+		$this->load->view('footer');
+	}
 }
