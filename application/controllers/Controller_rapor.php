@@ -31,8 +31,8 @@ class Controller_rapor extends CI_Controller {
 		$this->load->view('WKRapor', $param);
 		$this->load->view('footer');
 	}
-	
-	public function lihatNilaiRapor($id, $idKelas){
+
+	public function tampilRapor($id, $idKelas){
 		$data = $this->Model_nilai->lihatNilaiRapor($id, $idKelas);
 		$catatan = $data[0]->catatan;
 		$ratarata =0;
@@ -51,7 +51,7 @@ class Controller_rapor extends CI_Controller {
 			'ratarata' => $ratarata,
 		);
 		$this->load->view('headerWali');
-		$this->load->view('WKRapor', $param);
+		$this->load->view('WMRapor', $param);
 		$this->load->view('footer');
 	}
 
