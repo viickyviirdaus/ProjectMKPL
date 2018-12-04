@@ -9,6 +9,10 @@ class Model_user extends CI_Model{
 		return $this->db->get_where($table,$where);
 	}
 
+	function loginSiswa($table,$where){		
+		return $this->db->get_where($table,$where);
+	}
+
 	function tambahAkunAdmin($data, $tabel){
 		$this->db->insert($tabel,$data);
 	}
