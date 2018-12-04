@@ -74,7 +74,7 @@ class Controller_nilai extends CI_Controller {
 		);
 		$this->load->view('headerWali');
 		$this->load->view('WKDaftarNilai', $param);
-		$this->load->view('footer');		
+		$this->load->view('footer');
 	}
 
 	public function ubahNilaiSiswa(){
@@ -112,6 +112,20 @@ class Controller_nilai extends CI_Controller {
 		);
 		$this->load->view('headerWali');
 		$this->load->view('WKDaftarNilai', $param);
+		$this->load->view('footer');
+	}
+
+	public function tampilNilaiHarian($id, $idKelas){
+		$data = $this->Model_nilai->tampilSemuaNilai($id,$idKelas);
+		$param = array(
+			'data' 	=> $data,
+			'idSiswa' => $id,
+			'idKelas' => $idKelas,
+			'data_login' =>  $this->session->userdata(),
+		);
+		// var_dump($param);
+		$this->load->view('headerWali');
+		$this->load->view('WMNilaiHarian', $param);
 		$this->load->view('footer');
 	}
 
